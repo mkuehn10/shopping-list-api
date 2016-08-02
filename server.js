@@ -54,10 +54,10 @@ app.post('/items', jsonParser, function(req, res) {
 });
 
 app.delete('/items/:id', function(req, res) {
-    // if (!req.body) {
-    //     return res.sendStatus(400);
-    // }
-    console.log(req.body);
+    if (!req.params.id) {
+         return res.sendStatus(400);
+     }
+    // console.log(req.body);
     // var headerName = request.params.header_name;
     var id = req.params.id;
     // console.log(storage.items[id]);
@@ -69,14 +69,14 @@ app.delete('/items/:id', function(req, res) {
 });
 
 app.put('/items/:id', jsonParser, function(req, res) {
-    // if (!req.body) {
-    //     return res.sendStatus(400);
-    // }
+    if (!req.params.id) {
+         return res.sendStatus(400);
+     }
     // console.log(req.body);
     // var headerName = request.params.header_name;
     var id = req.params.id;
     storage.items[id].name = req.body.name;
-    console.log(storage.items[id]);
+    // console.log(storage.items[id]);
 
     // var item = storage.add(req.body.name);
     // var removed = storage.remove(id);
