@@ -19,16 +19,18 @@ Storage.prototype.add = function(name) {
 };
 
 Storage.prototype.remove = function(id) {
-    var removeLocation = -1;
-    this.items.forEach(function(item, location) {
-        if (item.id == id) {
-            removeLocation = location;
-        }
+    var itemToRemove;
+    var targetIndex;
+    
+    itemToRemove = this.items.find(function(item) {
+        return (item.id == id);
     });
-    if (removeLocation === -1) {
+    if (itemToRemove) {
+        targetIndex = this.items.indexOf(itemToRemove);
+        return this.items.splice(targetIndex, 1);
+    } else {
         return this.items;
     }
-    return this.items.splice(removeLocation, 1);
 };
 
 var storage = new Storage();
@@ -63,7 +65,7 @@ app.delete('/items/:id', function(req, res) {
 });
 
 app.put('/items/:id', jsonParser, function(req, res) {
-    if (!req.body.name) {
+    if (!req.params.id) {
         return res.sendStatus(400);
     }
     var id = req.params.id;
